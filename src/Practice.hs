@@ -1,17 +1,21 @@
 module Practice where
 
 isPrefix :: String -> String -> Bool
-isPrefix = undefined
+isPrefix "" _ = True
+isPrefix _ "" = False
+isPrefix (p:ps) (s:ss) = p == s && isPrefix ps ss
 
 removePrefix :: String -> String -> String
 --Pre:
-removePrefix = undefined
+removePrefix "" ss = ss
+removePrefix (p:ps) (s:ss) = removePrefix ps ss
 
 suffixes :: [a] -> [[a]]
-suffixes = undefined
+suffixes [] = []
+suffixes str@(_:ss) = str : suffixes ss
 
 isSubstring :: String -> String -> Bool
-isSubstring = undefined
+isSubstring sub s = any (isPrefix sub) (suffixes s)
 
 findSubstrings :: String -> String -> [Int]
-findSubstrings = undefined
+findSubstrings sub s = [i | i <- [0..length (suffixes s) - 1], isPrefix sub ((suffixes s)!!i)]
